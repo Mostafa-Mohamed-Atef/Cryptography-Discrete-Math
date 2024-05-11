@@ -1,42 +1,37 @@
 alphabet_dict = {chr(97 + i): i for i in range(26)}
-sentence = input('Enter your message : \n').strip(' ').split(' ')
-encrypted = []
-decrypted = []
-E = tt = original = ""
+sentence = input('Enter your message: \n')
+
+encrypted_text = encrypted_numbers =  original = ""
+encrypted_value = 0
 
 def Encryption():
-    global E, tt, encrypted
-    for word in sentence:
-        for letter in word:
-            encrypted.append(alphabet_dict[letter])
-    for x in range(len(encrypted)):
-        E += str((encrypted[x] + 11) % 26) + " "
-    print(E)
-    E2 = list(map(int,E.strip(' ').split(' ')))
-    for y in range(len(E2)):
-        for key, value in alphabet_dict.items():
-            if value == E2[y]:
-                tt += key 
-    print(tt)
-    E = E2 = ""
+    global encrypted_text, encrypted_numbers, encrypted_value
+    for letter in sentence:
+        if letter == ' ':
+            encrypted_text += ' '
+            encrypted_numbers += ' '
+        else:
+            encrypted_value = (alphabet_dict[letter] + 11) % 26
+            encrypted_numbers += str(encrypted_value) + " "
+            encrypted_letter = chr(97 + encrypted_value)
+            encrypted_text += encrypted_letter
+    print(f'Encrypted numbers ===> {encrypted_numbers}')
+    print(f"Encrypted Message ===> {encrypted_text}")
+    encrypted_numbers = ""
 
-def Decryption():   
-    global E, tt, decrypted, original
-    for word in tt:
-        for letter in word:
-            decrypted.append(alphabet_dict[letter])
-    for x in range(len(decrypted)):
-        E += str((decrypted[x] - 11) % 26) + " "
-    # print(E)
-    E2 = list(map(int,E.strip(' ').split(' ')))
-    for y in range(len(E2)):
-        for key, value in alphabet_dict.items():
-            if value == E2[y]:
-                original += key 
-    print(original)
-
-
+def Decryption():
+    global encrypted_text, encrypted_numbers, original, encrypted_value
+    for letter in encrypted_text:
+        if letter == ' ':
+            original += ' '
+            encrypted_numbers += ' '
+        else:
+            encrypted_value = (alphabet_dict[letter] - 11) % 26
+            encrypted_numbers += str(encrypted_value) + " "
+            encrypted_letter = chr(97 + encrypted_value)
+            original += encrypted_letter
+    print(f"Decrypted Numbers ===> {encrypted_numbers}")
+    print(f"Decrypted Message(orignal) ===> {original}")
 
 Encryption()
 Decryption()
-
